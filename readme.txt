@@ -19,8 +19,10 @@ Ve3 csv analysis app
    pip install -r requirements.txt
    ```
 
-4. Run migrations:
+4. Root into ve3 folder and Run migrations:
    ```bash
+   cd ve3
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
