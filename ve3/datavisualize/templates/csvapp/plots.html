@@ -1,0 +1,116 @@
+{% extends "csvapp/upload_csv.html" %}
+{% load static %}
+{% block main-content %}
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Generate Plots from CSV</h2>
+        <h5 class="text-danger">Choose x and y according to plots</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.x.label_tag }} {{ form.x }}
+                </div>
+                <div class="form-group">
+                    {{ form.y.label_tag }} {{ form.y }}
+                </div>
+                <div class="row g-4" id="">
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_scatter }} {{ form.include_scatter.label_tag }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_histogram }} {{ form.include_histogram.label_tag }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_box }} {{ form.include_box.label_tag }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_violin }} {{ form.include_violin.label_tag }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_strip }} {{ form.include_strip.label_tag }}
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_pairplot }} {{ form.include_pairplot.label_tag }}
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_violin }} {{ form.include_violin.label_tag }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3" data-wow-delay="0.5s">
+                        <div class="form-check">
+                            {{ form.include_violin }} {{ form.include_violin.label_tag }}
+                        </div>
+                    </div> -->
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Generate Plots</button>
+            </form>
+
+            <div class="row g-4">
+                {% if scatter_plot %}
+                <div class="col-lg-6">
+                    <h3 class="mt-5">Scatter Plot</h3>
+                    <img src="data:image/png;base64,{{ scatter_plot }}" alt="Scatter Plot" class="img-fluid">
+                </div>
+                {% endif %}
+
+                {% if histogram %}
+                <div class="col-lg-6">
+                    <h3 class="mt-5">Histogram</h3>
+                    <img src="data:image/png;base64,{{ histogram }}" alt="Histogram" class="img-fluid">
+                </div>
+                {% endif %}
+
+                {% if box_plot %}
+                <div class="col-lg-6">
+                    <h3 class="mt-5">Box Plot</h3>
+                    <img src="data:image/png;base64,{{ box_plot }}" alt="Box Plot" class="img-fluid">
+                </div>
+                {% endif %}
+
+                {% if violin_plot %}
+                <div class="col-lg-6">
+                    <h3 class="mt-5">Violin Plot</h3>
+                    <img src="data:image/png;base64,{{ violin_plot }}" alt="Violin Plot" class="img-fluid">
+                </div>
+                {% endif %}
+
+                {% if strip_plot %}
+                <div class="col-lg-6">
+                    <h3 class="mt-5">Strip Plot</h3>
+                    <img src="data:image/png;base64,{{ strip_plot }}" alt="Strip Plot" class="img-fluid">
+                </div>
+                {% endif %}
+            </div>
+
+            {% if error %}
+            <div class="alert alert-danger mt-3">
+                {{ error }}
+            </div>
+            {% endif %}
+    </div>
+    <div class="container my-5 text-danger text-center">
+            <a href="{% url 'upload_csv' %}" >GO back Home</a>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+    {% endblock main-content %}
