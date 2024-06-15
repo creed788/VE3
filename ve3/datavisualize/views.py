@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def sanitize_filename(filename):
+def clean_filename(filename):
     return re.sub(r'[^\w\s-]', '', filename).replace(' ', '_')
 
 
@@ -49,8 +49,8 @@ def upload_csv(request):
             # Generate Histogram
             histograms = []
             for column in df.select_dtypes(include=['float64', 'int64']).columns:
-                sanitized_column = sanitize_filename(column)
-                plot_path = os.path.join(settings.MEDIA_ROOT, f'{sanitized_column}_hist.png')
+                clean_column = clean_filename(column)
+                plot_path = os.path.join(settings.MEDIA_ROOT, f'{clean_column}_hist.png')
                 
                 # Ensure the directory exists
                 os.makedirs(os.path.dirname(plot_path), exist_ok=True)
@@ -58,7 +58,7 @@ def upload_csv(request):
                 plt.figure()
                 sns.histplot(df[column].dropna(), kde=False)
                 plt.savefig(plot_path)
-                histograms.append(f'{sanitized_column}_hist.png')
+                histograms.append(f'{clean_column}_hist.png')
                 plt.close()   
 
             return render(request, 'csvapp/results.html', {
